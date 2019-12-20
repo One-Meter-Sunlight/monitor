@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.monitor.dao.CollectorAdlinkMapper">
+
+    <resultMap id="BaseResultMap" type="com.imooc.monitor.entity.CollectorAdlink">
+        <result column="collector_id" jdbcType="VARCHAR" property="collectorId"/>
+        <result column="area_id" jdbcType="INTEGER" property="areaId"/>
+        <result column="collector_note" jdbcType="VARCHAR" property="collectorNote"/>
+        <result column="collector_ip" jdbcType="VARCHAR" property="collectorIp"/>
+        <result column="channel_0_note" jdbcType="VARCHAR" property="channel0Note"/>
+        <result column="channel_1_note" jdbcType="VARCHAR" property="channel1Note"/>
+        <result column="channel_2_note" jdbcType="VARCHAR" property="channel2Note"/>
+        <result column="channel_3_note" jdbcType="VARCHAR" property="channel3Note"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd"/>
+        <result column="rate" jdbcType="INTEGER" property="rate"/>
+        <result column="data_count" jdbcType="INTEGER" property="dataCount"/>
+        <result column="save_interval" jdbcType="INTEGER" property="saveInterval"/>
+        <result column="sensor_0_sensitivity" jdbcType="INTEGER" property="sensor0Sensitivity"/>
+        <result column="sensor_1_sensitivity" jdbcType="INTEGER" property="sensor1Sensitivity"/>
+        <result column="sensor_2_sensitivity" jdbcType="INTEGER" property="sensor2Sensitivity"/>
+        <result column="sensor_3_sensitivity" jdbcType="INTEGER" property="sensor3Sensitivity"/>
+        <result column="channel_0_threshold" jdbcType="FLOAT" property="channel0Threshold"/>
+        <result column="channel_1_threshold" jdbcType="FLOAT" property="channel1Threshold"/>
+        <result column="channel_2_threshold" jdbcType="FLOAT" property="channel2Threshold"/>
+        <result column="channel_3_threshold" jdbcType="FLOAT" property="channel3Threshold"/>
+        <result column="tachometer" jdbcType="INTEGER" property="tachometer"/>
+        <result column="MachineType" jdbcType="INTEGER" property="machinetype"/>
+        <result column="MachinePara" jdbcType="VARCHAR" property="machinepara"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        collector_id, area_id, collector_note, collector_ip, channel_0_note, channel_1_note,
+        channel_2_note, channel_3_note, login_name, login_pwd, rate, data_count, save_interval,
+        sensor_0_sensitivity, sensor_1_sensitivity, sensor_2_sensitivity, sensor_3_sensitivity,
+        channel_0_threshold, channel_1_threshold, channel_2_threshold, channel_3_threshold,
+        tachometer, MachineType, MachinePara, type
+    </sql>
+
+    <select id="selectByExample" parameterType="com.imooc.monitor.entity.CollectorAdlink" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from collector_adlink
+    </select>
+
+    <select id="selectByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from collector_adlink
+        where type = #{value}
+    </select>
+
+    <insert id="insert" parameterType="com.imooc.monitor.entity.CollectorAdlink">
+        insert into collector_adlink (collector_id, area_id, collector_note,
+                                      collector_ip, channel_0_note, channel_1_note,
+                                      channel_2_note, channel_3_note, login_name,
+                                      login_pwd, rate, data_count,
+                                      save_interval, sensor_0_sensitivity, sensor_1_sensitivity,
+                                      sensor_2_sensitivity, sensor_3_sensitivity,
+                                      channel_0_threshold, channel_1_threshold, channel_2_threshold,
+                                      channel_3_threshold, tachometer, MachineType,
+                                      MachinePara, type)
+        values (#{collectorId,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, #{collectorNote,jdbcType=VARCHAR},
+                #{collectorIp,jdbcType=VARCHAR}, #{channel0Note,jdbcType=VARCHAR}, #{channel1Note,jdbcType=VARCHAR},
+                #{channel2Note,jdbcType=VARCHAR}, #{channel3Note,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
+                #{loginPwd,jdbcType=VARCHAR}, #{rate,jdbcType=INTEGER}, #{dataCount,jdbcType=INTEGER},
+                #{saveInterval,jdbcType=INTEGER}, #{sensor0Sensitivity,jdbcType=INTEGER},
+                #{sensor1Sensitivity,jdbcType=INTEGER},
+                #{sensor2Sensitivity,jdbcType=INTEGER}, #{sensor3Sensitivity,jdbcType=INTEGER},
+                #{channel0Threshold,jdbcType=FLOAT}, #{channel1Threshold,jdbcType=FLOAT},
+                #{channel2Threshold,jdbcType=FLOAT},
+                #{channel3Threshold,jdbcType=FLOAT}, #{tachometer,jdbcType=INTEGER}, #{machinetype,jdbcType=INTEGER},
+                #{machinepara,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.imooc.monitor.entity.CollectorAdlink">
+        insert into collector_adlink
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="collectorId != null">
+                collector_id,
+            </if>
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="collectorNote != null">
+                collector_note,
+            </if>
+            <if test="collectorIp != null">
+                collector_ip,
+            </if>
+            <if test="channel0Note != null">
+                channel_0_note,
+            </if>
+            <if test="channel1Note != null">
+                channel_1_note,
+            </if>
+            <if test="channel2Note != null">
+                channel_2_note,
+            </if>
+            <if test="channel3Note != null">
+                channel_3_note,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="loginPwd != null">
+                login_pwd,
+            </if>
+            <if test="rate != null">
+                rate,
+            </if>
+            <if test="dataCount != null">
+                data_count,
+            </if>
+            <if test="saveInterval != null">
+                save_interval,
+            </if>
+            <if test="sensor0Sensitivity != null">
+                sensor_0_sensitivity,
+            </if>
+            <if test="sensor1Sensitivity != null">
+                sensor_1_sensitivity,
+            </if>
+            <if test="sensor2Sensitivity != null">
+                sensor_2_sensitivity,
+            </if>
+            <if test="sensor3Sensitivity != null">
+                sensor_3_sensitivity,
+            </if>
+            <if test="channel0Threshold != null">
+                channel_0_threshold,
+            </if>
+            <if test="channel1Threshold != null">
+                channel_1_threshold,
+            </if>
+            <if test="channel2Threshold != null">
+                channel_2_threshold,
+            </if>
+            <if test="channel3Threshold != null">
+                channel_3_threshold,
+            </if>
+            <if test="tachometer != null">
+                tachometer,
+            </if>
+            <if test="machinetype != null">
+                MachineType,
+            </if>
+            <if test="machinepara != null">
+                MachinePara,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="collectorId != null">
+                #{collectorId,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="collectorNote != null">
+                #{collectorNote,jdbcType=VARCHAR},
+            </if>
+            <if test="collectorIp != null">
+                #{collectorIp,jdbcType=VARCHAR},
+            </if>
+            <if test="channel0Note != null">
+                #{channel0Note,jdbcType=VARCHAR},
+            </if>
+            <if test="channel1Note != null">
+                #{channel1Note,jdbcType=VARCHAR},
+            </if>
+            <if test="channel2Note != null">
+                #{channel2Note,jdbcType=VARCHAR},
+            </if>
+            <if test="channel3Note != null">
+                #{channel3Note,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPwd != null">
+                #{loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="rate != null">
+                #{rate,jdbcType=INTEGER},
+            </if>
+            <if test="dataCount != null">
+                #{dataCount,jdbcType=INTEGER},
+            </if>
+            <if test="saveInterval != null">
+                #{saveInterval,jdbcType=INTEGER},
+            </if>
+            <if test="sensor0Sensitivity != null">
+                #{sensor0Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="sensor1Sensitivity != null">
+                #{sensor1Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="sensor2Sensitivity != null">
+                #{sensor2Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="sensor3Sensitivity != null">
+                #{sensor3Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="channel0Threshold != null">
+                #{channel0Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="channel1Threshold != null">
+                #{channel1Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="channel2Threshold != null">
+                #{channel2Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="channel3Threshold != null">
+                #{channel3Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="tachometer != null">
+                #{tachometer,jdbcType=INTEGER},
+            </if>
+            <if test="machinetype != null">
+                #{machinetype,jdbcType=INTEGER},
+            </if>
+            <if test="machinepara != null">
+                #{machinepara,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByExampleSelective">
+        update collector_adlink
+        <set>
+            <if test="record.areaId != null">
+                area_id = #{record.areaId,jdbcType=INTEGER},
+            </if>
+            <if test="record.collectorNote != null">
+                collector_note = #{record.collectorNote,jdbcType=VARCHAR},
+            </if>
+            <if test="record.collectorIp != null">
+                collector_ip = #{record.collectorIp,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channel0Note != null">
+                channel_0_note = #{record.channel0Note,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channel1Note != null">
+                channel_1_note = #{record.channel1Note,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channel2Note != null">
+                channel_2_note = #{record.channel2Note,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channel3Note != null">
+                channel_3_note = #{record.channel3Note,jdbcType=VARCHAR},
+            </if>
+            <if test="record.loginName != null">
+                login_name = #{record.loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.loginPwd != null">
+                login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="record.rate != null">
+                rate = #{record.rate,jdbcType=INTEGER},
+            </if>
+            <if test="record.dataCount != null">
+                data_count = #{record.dataCount,jdbcType=INTEGER},
+            </if>
+            <if test="record.saveInterval != null">
+                save_interval = #{record.saveInterval,jdbcType=INTEGER},
+            </if>
+            <if test="record.sensor0Sensitivity != null">
+                sensor_0_sensitivity = #{record.sensor0Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="record.sensor1Sensitivity != null">
+                sensor_1_sensitivity = #{record.sensor1Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="record.sensor2Sensitivity != null">
+                sensor_2_sensitivity = #{record.sensor2Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="record.sensor3Sensitivity != null">
+                sensor_3_sensitivity = #{record.sensor3Sensitivity,jdbcType=INTEGER},
+            </if>
+            <if test="record.channel0Threshold != null">
+                channel_0_threshold = #{record.channel0Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="record.channel1Threshold != null">
+                channel_1_threshold = #{record.channel1Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="record.channel2Threshold != null">
+                channel_2_threshold = #{record.channel2Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="record.channel3Threshold != null">
+                channel_3_threshold = #{record.channel3Threshold,jdbcType=FLOAT},
+            </if>
+            <if test="record.tachometer != null">
+                tachometer = #{record.tachometer,jdbcType=INTEGER},
+            </if>
+            <if test="record.machinetype != null">
+                MachineType = #{record.machinetype,jdbcType=INTEGER},
+            </if>
+            <if test="record.machinepara != null">
+                MachinePara = #{record.machinepara,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=VARCHAR},
+            </if>
+        </set>
+       WHERE collector_id = #{record.collectorId}
+    </update>
+
+</mapper>
