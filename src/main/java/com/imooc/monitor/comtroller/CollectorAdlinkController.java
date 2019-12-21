@@ -45,7 +45,7 @@ public class CollectorAdlinkController {
     @ApiOperation(value = "查询采集器信息列表", notes = "查询采集器信息列表")
     @ApiResponse(response = List.class, code = 200, message = "接口返回对象参数")
     BaseResult list() {
-        return BaseResult.success(collectorAdlinkService.list());
+        return BaseResult.success(collectorAdlinkService.selectList());
     }
 
 }

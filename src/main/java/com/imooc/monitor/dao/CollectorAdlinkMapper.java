@@ -1,6 +1,6 @@
 package com.imooc.monitor.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.imooc.monitor.entity.CollectorAdlink;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,4 +22,11 @@ public interface CollectorAdlinkMapper extends BaseMapper<CollectorAdlink> {
      * @return
      */
     List<CollectorAdlink> selectByType(String type);
+
+    /**
+     * 根据类型查询采集器
+     *
+     * @return
+     */
+    List<CollectorAdlink> selectList();
 }

@@ -1,7 +1,6 @@
 package com.imooc.monitor.service;
 
-
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.entity.CollectorAdlink;
 
 import java.util.List;
@@ -21,4 +20,11 @@ public interface CollectorAdlinkService extends IService<CollectorAdlink> {
      * @return
      */
     List<CollectorAdlink> getListByType(String type);
+
+    /**
+     * 根据类型查询采集器
+     *
+     * @return
+     */
+    List<CollectorAdlink> selectList();
 }

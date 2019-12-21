@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imooc.monitor.dao.RecordMapper">
+
+    <resultMap id="RecordsMap" type="com.imooc.monitor.entity.Record">
+        <result property="idd" column="idd"/>
+        <result property="collectorId" column="collector_id"/>
+        <result property="channel" column="channel"/>
+        <result property="collectDate" column="collect_date"/>
+        <result property="collectorNote" column="collector_note"/>
+        <result property="rotationRate" column="rotation_rate"/>
+        <result property="temprature" column="temprature"/>
+        <result property="rate" column="rate"/>
+        <result property="dataCount" column="data_count"/>
+        <result property="g" column="G"/>
+        <result property="fft" column="FFT"/>
+        <result property="gRms" column="g_rms"/>
+        <result property="gPeak" column="g_peak"/>
+        <result property="mmsRms" column="mms_rms"/>
+        <result property="mmsPeak" column="mms_peak"/>
+        <result property="umPp" column="um_pp"/>
+    </resultMap>
+    
+    <sql id="columns">
+        idd, collector_id, channel, collect_date, collector_note, rotation_rate, temprature, rate, data_count, G, FFT, g_rms, g_peak, mms_rms, mms_peak, um_pp
+    </sql>
+    
+    <sql id="where">
+        <where>
+           <if test="collectorId != null">
+               AND collector_id = #{collectorId}
+           </if>
+           <if test="channel != null">
+               AND channel = #{channel}
+           </if>
+           <if test="collectDate != null">
+               AND collect_date = #{collectDate}
+           </if>
+           <if test="collectorNote != null">
+               AND collector_note = #{collectorNote}
+           </if>
+           <if test="rotationRate != null">
+               AND rotation_rate = #{rotationRate}
+           </if>
+           <if test="temprature != null">
+               AND temprature = #{temprature}
+           </if>
+           <if test="rate != null">
+               AND rate = #{rate}
+           </if>
+           <if test="dataCount != null">
+               AND data_count = #{dataCount}
+           </if>
+           <if test="g != null">
+               AND G = #{g}
+           </if>
+           <if test="fft != null">
+               AND FFT = #{fft}
+           </if>
+           <if test="grms != null">
+               AND g_rms = #{grms}
+           </if>
+           <if test="gpeak != null">
+               AND g_peak = #{gpeak}
+           </if>
+           <if test="mmsRms != null">
+               AND mms_rms = #{mmsRms}
+           </if>
+           <if test="mmsPeak != null">
+               AND mms_peak = #{mmsPeak}
+           </if>
+           <if test="umPp != null">
+               AND um_pp = #{umPp}
+           </if>
+        </where>
+    </sql>
+   
+    <!-- 根据主键查询（单对象）-->
+    <select id="get" resultMap="RecordsMap">
+        SELECT
+            <include refid="columns" />
+        FROM
+            records_${tableNameSuffix}
+        <where>
+            collector_id = #{collectorId}
+		</where>
+        LIMIT 1;
+    </select>
+    
+    <!-- 根据条件查询 -->
+    <select id="getByKey" resultMap="RecordsMap">
+        SELECT
+            <include refid="columns" />
+        FROM
+            records_${tableNameSuffix}
+        <include refid="where"/>
+    </select>
+
+    <!-- 分页查询(对象集合)-->
+    <select id="find" resultMap="RecordsMap">
+        SELECT
+            <include refid="columns" />
+        FROM
+        records_${tableNameSuffix}
+    </select>
+    
+    <!-- 根据条件查询(对象集合) -->
+    <select id="select" resultMap="RecordsMap">
+        SELECT
+            <include refid="columns" />
+        FROM
+            records_${tableNameSuffix}
+        <include refid="where"/>
+    </select>
+    
+    <!-- 批量添加 -->
+    <insert id="addBatchByTableNameSuffix" useGeneratedKeys="true" parameterType="com.imooc.monitor.entity.Record">
+        INSERT INTO records_${tableNameSuffix} (
+            collector_id,
+            channel,
+            collect_date,
+            collector_note,
+            rotation_rate,
+            temprature,
+            rate,
+            data_count,
+            G,
+            FFT,
+            g_rms,
+            g_peak,
+            mms_rms,
+            mms_peak,
+            um_pp
+        ) VALUES
+        <foreach collection="records" item="item" index="index" separator=",">
+            (#{item.collectorId},#{item.channel},#{item.collectDate},#{item.collectorNote},#{item.rotationRate},#{item.temprature},
+            #{item.rate},#{item.dataCount},#{item.g},#{item.fft},#{item.gRms},#{item.gPeak},#{item.mmsRms},#{item.mmsPeak},#{item.umPp})
+        </foreach>
+    </insert>
+
+</mapper>
+

@@ -30,6 +30,12 @@
         <result column="type" jdbcType="VARCHAR" property="type"/>
     </resultMap>
 
+    <select id="selectList" parameterType="com.imooc.monitor.entity.CollectorAdlink" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from collector_adlink
+    </select>
+
     <sql id="Base_Column_List">
         collector_id, area_id, collector_note, collector_ip, channel_0_note, channel_1_note,
         channel_2_note, channel_3_note, login_name, login_pwd, rate, data_count, save_interval,

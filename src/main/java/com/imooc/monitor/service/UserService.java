@@ -1,6 +1,6 @@
 package com.imooc.monitor.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.entity.User;
 
 import java.util.List;

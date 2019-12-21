@@ -1,7 +1,6 @@
 package com.imooc.monitor.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.imooc.monitor.annotation.DataSource;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.imooc.monitor.dao.CollectorAdlinkMapper;
 import com.imooc.monitor.entity.CollectorAdlink;
 import com.imooc.monitor.service.CollectorAdlinkService;
@@ -26,6 +25,9 @@ import java.util.List;
 public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMapper, CollectorAdlink>
         implements CollectorAdlinkService {
 
+    /**
+     *
+     */
     private static final Logger logger = LoggerFactory.getLogger(CollectorAdlinkServiceImpl.class);
 
     @Autowired
@@ -35,5 +37,10 @@ public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMappe
     public List<CollectorAdlink> getListByType(String type) {
         logger.info("请求类型为：[{}]", type);
         return collectorAdlinkMapper.selectByType(type);
+    }
+
+    @Override
+    public List<CollectorAdlink> selectList() {
+        return collectorAdlinkMapper.selectList();
     }
 }
