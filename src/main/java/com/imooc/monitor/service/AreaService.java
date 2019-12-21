@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.command.AreaCommand;
 import com.imooc.monitor.entity.Area;
+import com.imooc.monitor.vo.AreaAndCollectorsVO;
 
 /**
  * Area Service
@@ -20,4 +21,11 @@ public interface AreaService extends IService<Area> {
      * @return
      */
     Page<Area> pageArea(AreaCommand command);
+
+    /**
+     * 分页查询区域采集器
+     * @param command
+     * @return
+     */
+    Page<AreaAndCollectorsVO> pageForAreaCollector(AreaCommand command);
 }

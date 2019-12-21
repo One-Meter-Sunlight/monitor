@@ -6,6 +6,7 @@ import com.imooc.monitor.command.AreaCommand;
 import com.imooc.monitor.dao.AreaMapper;
 import com.imooc.monitor.entity.Area;
 import com.imooc.monitor.service.AreaService;
+import com.imooc.monitor.vo.AreaAndCollectorsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,30 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
         }
 
         List<Area> areas = areaMapper.selectForPage(page, condition);
+        page.setRecords(areas);
+
+        return page;
+    }
+
+    /**
+     * 分页查询区域采集器
+     * @param command
+     * @return
+     */
+    @Override
+    public Page<AreaAndCollectorsVO> pageForAreaCollector(AreaCommand command) {
+        // 分页查询
+        Page<AreaAndCollectorsVO> page = new Page<>(command.getCurrent(), command.getSize());
+
+        Map<String, Object> condition = new HashMap<>();
+        if (StringUtils.isNotBlank(command.getAreaName())) {
+            condition.put("areaName", command.getAreaName());
+        }
+        if (StringUtils.isNotBlank(command.getAreaId())) {
+            condition.put("areaId", command.getAreaId());
+        }
+
+        List<AreaAndCollectorsVO> areas = areaMapper.selectAreaAndCollectorsForPage(page, condition);
         page.setRecords(areas);
 
         return page;

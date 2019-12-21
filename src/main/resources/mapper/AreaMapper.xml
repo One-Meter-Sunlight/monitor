@@ -8,6 +8,38 @@
         <result property="areaId" column="area_id"/>
         <result property="areaName" column="area_name"/>
     </resultMap>
+
+    <resultMap id="AreaCollectorsVOMap" type="com.imooc.monitor.vo.AreaAndCollectorsVO">
+        <result property="areaId" column="area_id"/>
+        <result property="areaName" column="area_name"/>
+        <collection property="collectors" ofType="com.imooc.monitor.entity.CollectorAdlink" javaType="java.util.List" >
+            <result column="collector_id" jdbcType="VARCHAR" property="collectorId"/>
+            <result column="area_id" jdbcType="INTEGER" property="areaId"/>
+            <result column="collector_note" jdbcType="VARCHAR" property="collectorNote"/>
+            <result column="collector_ip" jdbcType="VARCHAR" property="collectorIp"/>
+            <result column="channel_0_note" jdbcType="VARCHAR" property="channel0Note"/>
+            <result column="channel_1_note" jdbcType="VARCHAR" property="channel1Note"/>
+            <result column="channel_2_note" jdbcType="VARCHAR" property="channel2Note"/>
+            <result column="channel_3_note" jdbcType="VARCHAR" property="channel3Note"/>
+            <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+            <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd"/>
+            <result column="rate" jdbcType="INTEGER" property="rate"/>
+            <result column="data_count" jdbcType="INTEGER" property="dataCount"/>
+            <result column="save_interval" jdbcType="INTEGER" property="saveInterval"/>
+            <result column="sensor_0_sensitivity" jdbcType="INTEGER" property="sensor0Sensitivity"/>
+            <result column="sensor_1_sensitivity" jdbcType="INTEGER" property="sensor1Sensitivity"/>
+            <result column="sensor_2_sensitivity" jdbcType="INTEGER" property="sensor2Sensitivity"/>
+            <result column="sensor_3_sensitivity" jdbcType="INTEGER" property="sensor3Sensitivity"/>
+            <result column="channel_0_threshold" jdbcType="FLOAT" property="channel0Threshold"/>
+            <result column="channel_1_threshold" jdbcType="FLOAT" property="channel1Threshold"/>
+            <result column="channel_2_threshold" jdbcType="FLOAT" property="channel2Threshold"/>
+            <result column="channel_3_threshold" jdbcType="FLOAT" property="channel3Threshold"/>
+            <result column="tachometer" jdbcType="INTEGER" property="tachometer"/>
+            <result column="MachineType" jdbcType="INTEGER" property="machinetype"/>
+            <result column="MachinePara" jdbcType="VARCHAR" property="machinepara"/>
+            <result column="type" jdbcType="VARCHAR" property="type"/>
+        </collection>
+    </resultMap>
     
     <sql id="columns">
         area_id, area_name
@@ -109,6 +141,19 @@
                 AND area_name = #{areaName}
             </if>
         </where>
+    </select>
+
+    <select id="selectAreaAndCollectorsForPage" resultMap="AreaCollectorsVOMap">
+        SELECT
+            a.area_id,
+            a.area_name,
+            b.collector_id, b.area_id, b.collector_note, b.collector_ip, b.channel_0_note, b.channel_1_note,
+        b.channel_2_note, b.channel_3_note, b.login_name, b.login_pwd, b.rate, b.data_count, b.save_interval,
+        b.sensor_0_sensitivity, b.sensor_1_sensitivity, b.sensor_2_sensitivity, b.sensor_3_sensitivity,
+        b.channel_0_threshold, b.channel_1_threshold, b.channel_2_threshold, b.channel_3_threshold,
+        b.tachometer, b.MachineType, b.MachinePara, b.type
+        from area a
+        INNER JOIN collector_adlink b ON a.area_id = b.area_id
     </select>
 
 </mapper>

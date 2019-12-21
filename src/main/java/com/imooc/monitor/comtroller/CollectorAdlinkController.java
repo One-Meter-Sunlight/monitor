@@ -41,10 +41,10 @@ public class CollectorAdlinkController {
     }
 
     @UserLoginToken
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/pageList", method = RequestMethod.GET)
     @ApiOperation(value = "查询采集器信息列表", notes = "查询采集器信息列表")
     @ApiResponse(response = List.class, code = 200, message = "接口返回对象参数")
-    BaseResult list() {
+    BaseResult pageList() {
         return BaseResult.success(collectorAdlinkService.selectList());
     }
 
