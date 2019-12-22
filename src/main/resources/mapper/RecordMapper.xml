@@ -146,7 +146,26 @@
         rotation_rate, temprature, rate, data_count
         FROM
         records_${collectorId}
-        <include refid="where"/>
+        <where>
+            <if test="collectorId != null">
+                AND collector_id = #{collectorId}
+            </if>
+            <if test="channel != null">
+                AND channel = #{channel}
+            </if>
+            <if test="collectDate != null">
+                AND collect_date = #{collectDate}
+            </if>
+            <if test="collectorNote != null">
+                AND collector_note = #{collectorNote}
+            </if>
+            <if test="collectBeginDate != null">
+                AND <![CDATA[ collect_date >= #{collectBeginDate} ]]>
+            </if>
+            <if test="collectEndDate != null">
+                AND <![CDATA[ collect_date <= #{collectEndDate} ]]>
+            </if>
+        </where>
     </select>
 
     <select id="listRecordsByTableNameSuffixForTransfor" resultMap="RecordsMap">

@@ -48,19 +48,26 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
      * @return
      */
     @Override
-    public List<Record> listRecords(RecordCommand command, String collectorId){
+    public List<Record> listRecords(RecordCommand command, String collectorId) {
         Map<String, Object> paramMap = Maps.newHashMap();
-        if(StringUtils.isNoneBlank(collectorId)) {
+        if (StringUtils.isNoneBlank(collectorId)) {
             paramMap.put("collectorId", collectorId);
         }
-        if(StringUtils.isNoneBlank(command.getChannel())) {
+        if (StringUtils.isNoneBlank(command.getChannel())) {
             paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectBeginDate()) {
+            paramMap.put("collectBeginDate", command.getCollectBeginDate());
+        }
+        if (null != command.getCollectEndDate()) {
+            paramMap.put("collectEndDate", command.getCollectEndDate());
         }
         return recordMapper.listRecordsByTableNameSuffix(paramMap);
     }
 
     /**
      * 查询转换后的采集器记录列表
+     *
      * @param command
      * @param collectorId
      * @return
@@ -68,17 +75,17 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     @Override
     public List<RecordVO> listRecordsToTransfor(RecordCommand command, String collectorId) {
         Map<String, Object> paramMap = Maps.newHashMap();
-        if(StringUtils.isNoneBlank(collectorId)) {
+        if (StringUtils.isNoneBlank(collectorId)) {
             paramMap.put("collectorId", collectorId);
         }
-        if(StringUtils.isNoneBlank(command.getChannel())) {
+        if (StringUtils.isNoneBlank(command.getChannel())) {
             paramMap.put("channel", command.getChannel());
         }
-        if(null != command.getCollectDate()) {
+        if (null != command.getCollectDate()) {
             paramMap.put("collectDate", command.getCollectDate());
         }
         List<Record> records = recordMapper.listRecordsByTableNameSuffixForTransfor(paramMap);
-        if(CollectionUtils.isEmpty(records)) {
+        if (CollectionUtils.isEmpty(records)) {
             return Lists.newArrayList();
         }
 
@@ -90,7 +97,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             BeanUtils.copyProperties(record, vo);
 
             String g = record.getG();
-            if(StringUtils.isNoneBlank(g)) {
+            if (StringUtils.isNoneBlank(g)) {
                 List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
                 List<PointVO> pointVOS = Lists.newArrayList();
                 for (int j = 0; j < list.size(); j++) {

@@ -29,4 +29,14 @@ public class RecordCommand {
      * 采集时间
      */
     private Date collectDate;
+
+    /**
+     * 采集开始时间
+     */
+    private Date collectBeginDate;
+
+    /**
+     * 采集结束时间
+     */
+    private Date collectEndDate;
 }
