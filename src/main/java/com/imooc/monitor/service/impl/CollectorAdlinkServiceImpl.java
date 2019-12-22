@@ -40,7 +40,7 @@ public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMappe
     }
 
     @Override
-    public List<CollectorAdlink> selectList() {
-        return collectorAdlinkMapper.selectList();
+    public List<CollectorAdlink> selectList(String areaId) {
+        return collectorAdlinkMapper.selectList(areaId);
     }
 }

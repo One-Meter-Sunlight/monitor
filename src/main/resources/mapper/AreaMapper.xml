@@ -143,6 +143,21 @@
         </where>
     </select>
 
+    <!--列表查询-->
+    <select id="selectForList" parameterType="java.util.Map" resultMap="AreaMap">
+        SELECT
+        <include refid="columns" />
+        FROM area
+        <where>
+            <if test="areaId != null">
+                AND area_id = #{areaId}
+            </if>
+            <if test="areaName != null">
+                AND area_name = #{areaName}
+            </if>
+        </where>
+    </select>
+
     <select id="selectAreaAndCollectorsForPage" resultMap="AreaCollectorsVOMap">
         SELECT
             a.area_id,

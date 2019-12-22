@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 采集器数据管理 Mapper 接口
@@ -17,4 +18,9 @@ import java.util.List;
 public interface RecordMapper extends BaseMapper<Record> {
 
     void addBatchByTableNameSuffix(@Param("records") List<Record> records, @Param("tableNameSuffix") String tableNameSuffix);
+
+    List<Record> listRecordsByTableNameSuffix(Map<String, Object> paramMap);
+
+    List<Record> listRecordsByTableNameSuffixForTransfor(Map<String, Object> paramMap);
+
 }

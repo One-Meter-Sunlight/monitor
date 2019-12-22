@@ -26,5 +26,5 @@ public interface CollectorAdlinkService extends IService<CollectorAdlink> {
      *
      * @return
      */
-    List<CollectorAdlink> selectList();
+    List<CollectorAdlink> selectList(String areaId);
 }

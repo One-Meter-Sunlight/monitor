@@ -140,5 +140,24 @@
         </foreach>
     </insert>
 
+    <select id="listRecordsByTableNameSuffix" resultMap="RecordsMap">
+        SELECT
+        collector_id, channel, collect_date, collector_note,
+        rotation_rate, temprature, rate, data_count
+        FROM
+        records_${collectorId}
+        <include refid="where"/>
+    </select>
+
+    <select id="listRecordsByTableNameSuffixForTransfor" resultMap="RecordsMap">
+        SELECT
+        collector_id, channel, collect_date, collector_note,
+        rotation_rate, temprature, rate, data_count, G
+        FROM
+        records_${collectorId}
+        <include refid="where"/>
+
+    </select>
+
 </mapper>
 

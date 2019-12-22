@@ -6,6 +6,8 @@ import com.imooc.monitor.command.AreaCommand;
 import com.imooc.monitor.entity.Area;
 import com.imooc.monitor.vo.AreaAndCollectorsVO;
 
+import java.util.List;
+
 /**
  * Area Service
  *
@@ -21,6 +23,14 @@ public interface AreaService extends IService<Area> {
      * @return
      */
     Page<Area> pageArea(AreaCommand command);
+
+    /**
+     * 列表查询
+     *
+     * @param command
+     * @return
+     */
+    List<Area> listArea(AreaCommand command);
 
     /**
      * 分页查询区域采集器

@@ -24,9 +24,9 @@ public interface CollectorAdlinkMapper extends BaseMapper<CollectorAdlink> {
     List<CollectorAdlink> selectByType(String type);
 
     /**
-     * 根据类型查询采集器
+     * 根据区域ID查询采集器
      *
      * @return
      */
-    List<CollectorAdlink> selectList();
+    List<CollectorAdlink> selectList(String areaId);
 }

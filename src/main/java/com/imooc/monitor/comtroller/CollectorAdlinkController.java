@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 采集器信息管理 Controller
@@ -32,20 +31,24 @@ public class CollectorAdlinkController {
     private CollectorAdlinkService collectorAdlinkService;
 
     @UserLoginToken
-    @RequestMapping(value = "/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getByType/{type}", method = RequestMethod.GET)
     @ApiOperation(value = "查询采集器信息", notes = "通过type-采集器类型查询采集器信息")
     @ApiImplicitParam(name = "type", value = "采集器类型", required = true, paramType = "path", dataType = "String")
-    @ApiResponse(response = CollectorAdlink.class, code = 200, message = "接口返回对象参数")
-    BaseResult getCollectorAdlinkById(@PathVariable(value = "type") String type) {
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult getCollectorAdlinkByType(@PathVariable(value = "type") String type) {
         return BaseResult.success(collectorAdlinkService.getListByType(type));
     }
 
+    /**
+     * 查询采集器列表
+     */
     @UserLoginToken
-    @RequestMapping(value = "/pageList", method = RequestMethod.GET)
-    @ApiOperation(value = "查询采集器信息列表", notes = "查询采集器信息列表")
-    @ApiResponse(response = List.class, code = 200, message = "接口返回对象参数")
-    BaseResult pageList() {
-        return BaseResult.success(collectorAdlinkService.selectList());
+    @RequestMapping(value = "/getByAreaId/{areaId}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询采集器列表", notes = "查询采集器列表")
+    @ApiImplicitParam(name = "areaId", value = "区域ID", required = true, paramType = "path", dataType = "String")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult getCollectorAdlinkById(@PathVariable(value = "areaId") String areaId) {
+        return BaseResult.success(collectorAdlinkService.selectList(areaId));
     }
 
 }

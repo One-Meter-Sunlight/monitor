@@ -39,7 +39,7 @@ public class UserController {
     @PassToken
     @RequestMapping(value = "/loginIn", method = RequestMethod.POST)
     @ApiOperation(value = "登录", notes = "用户登录")
-    @ApiResponse(response = JSONObject.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     public BaseResult login(@RequestBody User user) {
 
         if (null == user || StringUtils.isBlank(user.getUserId())) {
@@ -67,7 +67,7 @@ public class UserController {
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询账户信息", notes = "通过AccountId查询账户信息")
     @ApiImplicitParam(name = "accountId", value = "账户ID", required = true, paramType = "path", dataType = "String")
-    @ApiResponse(response = User.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult getUserByAccountId(@PathVariable(value = "userId") String userId) {
         return BaseResult.success(userService.getByUserId(userId));
     }
@@ -83,7 +83,7 @@ public class UserController {
     @UserLoginToken
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ApiOperation(value = "修改用户信息", notes = "修改用户信息")
-    @ApiResponse(response = Boolean.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult update(@RequestBody User user) {
         return BaseResult.success(userService.updateUser(user));
     }
@@ -91,7 +91,7 @@ public class UserController {
     @UserLoginToken
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ApiOperation(value = "查询账户信息列表", notes = "查询账户信息列表")
-    @ApiResponse(response = List.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult list() {
         return BaseResult.success(userService.getUserList());
     }

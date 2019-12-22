@@ -37,9 +37,20 @@ public class AreaController {
     @UserLoginToken
     @RequestMapping(value = "/pageArea", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询区域列表", notes = "分页查询区域列表")
-    @ApiResponse(response = JSONObject.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult pageArea(@RequestBody @ApiParam(name = "请求对象", value = "传入JSON格式") AreaCommand command) {
         return BaseResult.success(areaService.pageArea(command));
+    }
+
+    /**
+     * 查询区域列表
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/listArea", method = RequestMethod.POST)
+    @ApiOperation(value = "查询区域列表", notes = "查询区域列表")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult listArea(@RequestBody @ApiParam(name = "请求对象", value = "传入JSON格式") AreaCommand command) {
+        return BaseResult.success(areaService.listArea(command));
     }
 
     /**
@@ -51,7 +62,7 @@ public class AreaController {
     @UserLoginToken
     @RequestMapping(value = "/pageAreaCollector", method = RequestMethod.POST)
     @ApiOperation(value = "分页查询区域采集器信息列表", notes = "分页查询区域采集器信息列表")
-    @ApiResponse(response = List.class, code = 200, message = "接口返回对象参数")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult pageAreaCollector(@RequestBody @ApiParam(name = "请求对象", value = "传入JSON格式") AreaCommand command) {
         return BaseResult.success(areaService.pageForAreaCollector(command));
     }

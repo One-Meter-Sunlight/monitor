@@ -34,6 +34,9 @@
         select
         <include refid="Base_Column_List" />
         from collector_adlink
+        <where>
+            area_id = #{areaId}
+        </where>
     </select>
 
     <sql id="Base_Column_List">

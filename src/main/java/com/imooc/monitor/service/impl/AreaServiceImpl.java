@@ -31,6 +31,12 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
     @Autowired
     private AreaMapper areaMapper;
 
+    /**
+     * 分页查询区域列表
+     *
+     * @param command
+     * @return
+     */
     @Override
     public Page<Area> pageArea(AreaCommand command) {
         // 分页查询
@@ -51,7 +57,27 @@ public class AreaServiceImpl extends ServiceImpl<AreaMapper, Area> implements Ar
     }
 
     /**
+     * 查询区域列表
+     *
+     * @param command
+     * @return
+     */
+    @Override
+    public List<Area> listArea(AreaCommand command) {
+        Map<String, Object> condition = new HashMap<>();
+        if (StringUtils.isNotBlank(command.getAreaName())) {
+            condition.put("areaName", command.getAreaName());
+        }
+        if (StringUtils.isNotBlank(command.getAreaId())) {
+            condition.put("areaId", command.getAreaId());
+        }
+
+        return areaMapper.selectForList(condition);
+    }
+
+    /**
      * 分页查询区域采集器
+     *
      * @param command
      * @return
      */

@@ -28,6 +28,14 @@ public interface AreaMapper extends BaseMapper<Area> {
     List<Area> selectForPage(Page<Area> page, Map<String, Object> condition);
 
     /**
+     * 列表查询
+     *
+     * @param condition
+     * @return
+     */
+    List<Area> selectForList(Map<String, Object> condition);
+
+    /**
      * 分页查询区域采集器
      *
      * @return
