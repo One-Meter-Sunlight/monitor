@@ -89,12 +89,4 @@ public class DateUtil {
         return sdf.parse(date);
     }
 
-    public static void main(String[] args) {
-        Date now = new Date();
-        Date startTime = now;
-        Date endTime = DateUtil.addHours(now, -1);
-        String startTimeStr = DateUtil.format(startTime);
-        String endTimeStr =  DateUtil.format(endTime);
-        System.out.println(startTimeStr);
-    }
 }
