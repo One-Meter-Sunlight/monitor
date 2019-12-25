@@ -42,6 +42,17 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     }
 
     /**
+     * 查询采集器通道数据记录
+     *
+     * @param collectorId
+     * @return
+     */
+    @Override
+    public List<String> listChannels(String collectorId) {
+        return recordMapper.queryChannelsByCollectorId(collectorId);
+    }
+
+    /**
      * 根据条件查询采集器数据记录
      *
      * @param command

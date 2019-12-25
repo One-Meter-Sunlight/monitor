@@ -3,6 +3,7 @@ package com.imooc.monitor.command;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,8 +13,7 @@ import java.util.Date;
  * @Version 1.0
  * @Date: 2019/6/29 14:14
  */
-@Data
-public class RecordCommand {
+public class RecordCommand implements Serializable {
 
     /**
      * 采集器
@@ -39,4 +39,44 @@ public class RecordCommand {
      * 采集结束时间
      */
     private Date collectEndDate;
+
+    public String getCollectorId() {
+        return collectorId;
+    }
+
+    public void setCollectorId(String collectorId) {
+        this.collectorId = collectorId;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public Date getCollectDate() {
+        return collectDate;
+    }
+
+    public void setCollectDate(Date collectDate) {
+        this.collectDate = collectDate;
+    }
+
+    public Date getCollectBeginDate() {
+        return collectBeginDate;
+    }
+
+    public void setCollectBeginDate(Date collectBeginDate) {
+        this.collectBeginDate = collectBeginDate;
+    }
+
+    public Date getCollectEndDate() {
+        return collectEndDate;
+    }
+
+    public void setCollectEndDate(Date collectEndDate) {
+        this.collectEndDate = collectEndDate;
+    }
 }

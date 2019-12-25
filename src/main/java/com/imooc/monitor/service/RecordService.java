@@ -39,4 +39,12 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     List<RecordVO> listRecordsToTransfor(RecordCommand command, String collectorId);
+
+    /**
+     * 查询采集器通道数据记录
+     *
+     * @param collectorId
+     * @return
+     */
+    List<String> listChannels(String collectorId);
 }

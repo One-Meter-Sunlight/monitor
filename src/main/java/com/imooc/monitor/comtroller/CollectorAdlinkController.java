@@ -31,11 +31,11 @@ public class CollectorAdlinkController {
     private CollectorAdlinkService collectorAdlinkService;
 
     @UserLoginToken
-    @RequestMapping(value = "/getByType/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listByType/{type}", method = RequestMethod.GET)
     @ApiOperation(value = "查询采集器信息", notes = "通过type-采集器类型查询采集器信息")
     @ApiImplicitParam(name = "type", value = "采集器类型", required = true, paramType = "path", dataType = "String")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
-    BaseResult getCollectorAdlinkByType(@PathVariable(value = "type") String type) {
+    BaseResult listByType(@PathVariable(value = "type") String type) {
         return BaseResult.success(collectorAdlinkService.getListByType(type));
     }
 
@@ -43,11 +43,11 @@ public class CollectorAdlinkController {
      * 查询采集器列表
      */
     @UserLoginToken
-    @RequestMapping(value = "/getByAreaId/{areaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listByAreaId/{areaId}", method = RequestMethod.GET)
     @ApiOperation(value = "查询采集器列表", notes = "查询采集器列表")
     @ApiImplicitParam(name = "areaId", value = "区域ID", required = true, paramType = "path", dataType = "String")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
-    BaseResult getCollectorAdlinkById(@PathVariable(value = "areaId") String areaId) {
+    BaseResult listByAreaId(@PathVariable(value = "areaId") String areaId) {
         return BaseResult.success(collectorAdlinkService.selectList(areaId));
     }
 
