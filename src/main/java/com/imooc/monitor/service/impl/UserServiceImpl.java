@@ -1,6 +1,7 @@
 package com.imooc.monitor.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.imooc.monitor.annotation.DataSource;
 import com.imooc.monitor.dao.UserMapper;
 import com.imooc.monitor.entity.User;
 import com.imooc.monitor.service.UserService;
@@ -39,6 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
+    @DataSource("center")
     public User getByUserId(String userId) {
         return userMapper.selectOneByUserId(userId);
     }
@@ -49,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
+    @DataSource("center")
     public List<User> getUserList() {
         logger.info("查询账户信息列表");
         return userMapper.selectUserList();
@@ -61,6 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
+    @DataSource("center")
     public Boolean addUser(User user) {
         logger.info("新增用户信息");
         return userMapper.insert(user) > 0 ? true : false;
@@ -73,6 +77,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
+    @DataSource("center")
     public Boolean updateUser(User user) {
         return userMapper.updateById(user) > 0 ? true : false;
     }

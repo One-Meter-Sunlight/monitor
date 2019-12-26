@@ -65,8 +65,8 @@ public class UserController {
 
     @UserLoginToken
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询账户信息", notes = "通过AccountId查询账户信息")
-    @ApiImplicitParam(name = "accountId", value = "账户ID", required = true, paramType = "path", dataType = "String")
+    @ApiOperation(value = "查询账户信息", notes = "通过AccountId查询用户信息")
+    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, paramType = "path", dataType = "String")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult getUserByAccountId(@PathVariable(value = "userId") String userId) {
         return BaseResult.success(userService.getByUserId(userId));
@@ -90,7 +90,7 @@ public class UserController {
 
     @UserLoginToken
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ApiOperation(value = "查询账户信息列表", notes = "查询账户信息列表")
+    @ApiOperation(value = "查询用户信息列表", notes = "查询用户信息列表")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult list() {
         return BaseResult.success(userService.getUserList());
