@@ -29,7 +29,7 @@
     <!-- 查询账户信息列表 -->
     <select id="selectUserList" resultMap="BaseResultMap">
         select
-        <include refid="column"/>
+        id, user_id, user_name, email, data_source, created
         from user
     </select>
 
