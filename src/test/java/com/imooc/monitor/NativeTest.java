@@ -1,5 +1,7 @@
 package com.imooc.monitor;
 
+import com.imooc.monitor.jna.VibSPforND;
+
 /**
  * 动态链接库调用
  *
@@ -10,14 +12,11 @@ package com.imooc.monitor;
 public class NativeTest {
 
 
-
-    static {
-        System.load("d:\\VibSPforND.dll");
-    }
-
     public static void main(String[] args) {
-        NativeUtil nativeUtil = new NativeUtil();
-        double result = nativeUtil.GetEnvelope(new double[10], new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 5);
-        System.out.println(result);
+        System.out.println(VibSPforND.vi.GetEnvelope(new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 5));
+
+        System.out.println("================");
+
+        System.out.println(VibSPforND.vi.GetDisPP(new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 1.1, 2));
     }
 }
