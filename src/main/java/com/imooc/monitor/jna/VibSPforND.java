@@ -12,7 +12,7 @@ import com.sun.jna.Native;
  */
 public interface VibSPforND extends Library {
 
-    VibSPforND vi = (VibSPforND) Native.load("d:\\VibSPforND", VibSPforND.class);
+    VibSPforND vi = (VibSPforND) Native.load("d:\\MyDll", VibSPforND.class);
 
     double GetEnvelope(double[] m_Envelope, double[] m_timeData, int m_DataLength);
 
@@ -21,4 +21,6 @@ public interface VibSPforND extends Library {
     double GetEngPP(double[] m_pdata, float samplefrequency, int m_DataLength);
 
     double FreTrans_a2v(double[] velFreData, double[] m_timeData, int m_DataLength, float samplefrequency, int windowtype);
+
+    int Add(int a, int b);
 }
