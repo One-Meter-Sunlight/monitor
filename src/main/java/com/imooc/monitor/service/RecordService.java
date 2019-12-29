@@ -32,7 +32,15 @@ public interface RecordService extends IService<Record> {
     List<Record> listRecords(RecordCommand command, String collectorId);
 
     /**
-     * 查询转换后的采集器记录列表
+     * 查询采集器通道数据记录
+     *
+     * @param collectorId
+     * @return
+     */
+    List<String> listChannels(String collectorId);
+
+    /**
+     * 查询转换后的采集器时域图数据
      *
      * @param command
      * @param collectorId
@@ -41,10 +49,11 @@ public interface RecordService extends IService<Record> {
     List<RecordVO> listRecordsToTransfor(RecordCommand command, String collectorId);
 
     /**
-     * 查询采集器通道数据记录
+     * 查询转换后的采集器包络图数据
      *
+     * @param command
      * @param collectorId
      * @return
      */
-    List<String> listChannels(String collectorId);
+    List<RecordVO> listEnvelopeRecordsToTransfor(RecordCommand command, String collectorId);
 }

@@ -48,14 +48,25 @@ public class RecordController {
     }
 
     /**
-     * 查询转换后的采集器记录列表
+     * 查询转换后的采集器时域图数据
      */
     @UserLoginToken
     @RequestMapping(value = "/listRecordsToTransfor", method = RequestMethod.POST)
-    @ApiOperation(value = "查询转换后的采集器记录列表", notes = "查询转换后的采集器记录列表")
+    @ApiOperation(value = "查询转换后的采集器时域图数据", notes = "查询转换后的采集器时域图数据")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult listRecordsToTransfor(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
         return BaseResult.success(recordService.listRecordsToTransfor(command, command.getCollectorId()));
+    }
+
+    /**
+     * 查询转换后的采集器包络图数据
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/listEnvelopeRecordsToTransfor", method = RequestMethod.POST)
+    @ApiOperation(value = "查询转换后的采集器包络图数据", notes = "查询转换后的采集器包络图数据")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult listEnvelopeRecordsToTransfor(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
+        return BaseResult.success(recordService.listEnvelopeRecordsToTransfor(command, command.getCollectorId()));
     }
 
 }

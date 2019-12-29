@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import com.imooc.monitor.command.RecordCommand;
 import com.imooc.monitor.dao.RecordMapper;
 import com.imooc.monitor.entity.Record;
+import com.imooc.monitor.jna.VibSPforND;
 import com.imooc.monitor.service.RecordService;
 import com.imooc.monitor.vo.PointVO;
 import com.imooc.monitor.vo.RecordVO;
@@ -124,6 +125,64 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             recordVOList.add(vo);
         }
 
+        return recordVOList;
+    }
+
+    /**
+     * 查询转换后的采集器包络图数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    @Override
+    public List<RecordVO> listEnvelopeRecordsToTransfor(RecordCommand command, String collectorId) {
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNoneBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNoneBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectDate()) {
+            paramMap.put("collectDate", command.getCollectDate());
+        }
+        List<Record> records = recordMapper.listRecordsByTableNameSuffixForTransfor(paramMap);
+        if (CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+
+        // 转换
+        List<RecordVO> recordVOList = Lists.newArrayList();
+        for (int i = 0; i < records.size(); i++) {
+            Record record = records.get(i);
+            RecordVO vo = new RecordVO();
+            BeanUtils.copyProperties(record, vo);
+
+            String g = record.getG();
+            if (StringUtils.isNoneBlank(g)) {
+                List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
+                double[] param = new double[list.size()];
+                double[] m_timeData = new double[list.size()];
+                for (int k = 0; k < list.size(); k++) {
+                    m_timeData[k] = Double.valueOf(list.get(k));
+                }
+                // 包络图转换
+                VibSPforND.vi.GetEnvelope(param, m_timeData, list.size());
+                if (param.length > 0) {
+                    List<PointVO> pointVOS = Lists.newArrayList();
+                    for (int j = 0; j < param.length; j++) {
+                        PointVO pointVO = new PointVO();
+                        pointVO.setX(j);
+                        pointVO.setY(new BigDecimal(param[j]));
+                        pointVOS.add(pointVO);
+                    }
+                    vo.setPoints(pointVOS);
+                }
+            }
+
+            recordVOList.add(vo);
+        }
 
         return recordVOList;
     }

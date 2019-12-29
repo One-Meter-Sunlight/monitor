@@ -12,11 +12,15 @@ import com.imooc.monitor.jna.VibSPforND;
 public class VibSPforNDTest {
 
     public static void main(String[] args) {
-        System.out.println(VibSPforND.vi.GetEnvelope(new double[5],
-                new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 5));
+        double[] param = new double[5];
+        double value = VibSPforND.vi.GetEnvelope(param,
+                new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 5);
+        System.out.println(param[0]);
+        System.out.println(param[1]);
+        System.out.println(param[2]);
+        System.out.println(param[3]);
+        System.out.println(param[4]);
 
-        System.out.println("================");
-
-        System.out.println(VibSPforND.vi.GetDisPP(new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 1.1, 2));
     }
 }
+
