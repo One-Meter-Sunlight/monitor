@@ -12,7 +12,7 @@ import com.sun.jna.Native;
  */
 public interface VibSPforND extends Library {
 
-    VibSPforND vi = (VibSPforND) Native.load("VibSPforND", VibSPforND.class);
+    VibSPforND vi = (VibSPforND) Native.load("d:\\VibSPforND", VibSPforND.class);
 
     /**
      * 包络图
