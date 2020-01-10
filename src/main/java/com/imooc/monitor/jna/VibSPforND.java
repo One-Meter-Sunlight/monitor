@@ -16,13 +16,8 @@ public interface VibSPforND extends Library {
 
     /**
      * 包络图
-     *
-     * @param m_Envelope
-     * @param m_timeData
-     * @param m_DataLength
-     * @return
      */
-    double GetEnvelope(double[] m_Envelope, double[] m_timeData, int m_DataLength);
+    double GetEnvelope(double[] m_Envelope, double[] envelopeFreData, double[] m_timeData, int windowtype, int m_DataLength);
 
     double GetDisPP(double[] m_pdata, double samplefrequency, int m_DataLength);
 

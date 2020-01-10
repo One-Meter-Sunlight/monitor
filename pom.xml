@@ -155,6 +155,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.dll</include>
+                    <include>**/*.h</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

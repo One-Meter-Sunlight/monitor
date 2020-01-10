@@ -13,8 +13,9 @@ public class VibSPforNDTest {
 
     public static void main(String[] args) {
         double[] param = new double[5];
-        double value = VibSPforND.vi.GetEnvelope(param,
-                new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 5);
+        double[] param2 = new double[5];
+        double value = VibSPforND.vi.GetEnvelope(param, param2,
+                new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 2, 5);
         System.out.println(param[0]);
         System.out.println(param[1]);
         System.out.println(param[2]);

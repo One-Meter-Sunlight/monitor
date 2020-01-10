@@ -163,12 +163,13 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             if (StringUtils.isNoneBlank(g)) {
                 List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
                 double[] param = new double[list.size()];
+                double[] param2 = new double[list.size()];
                 double[] m_timeData = new double[list.size()];
                 for (int k = 0; k < list.size(); k++) {
                     m_timeData[k] = Double.valueOf(list.get(k));
                 }
                 // 包络图转换
-                VibSPforND.vi.GetEnvelope(param, m_timeData, list.size());
+                VibSPforND.vi.GetEnvelope(param, param2, m_timeData, 1, list.size());
                 if (param.length > 0) {
                     List<PointVO> pointVOS = Lists.newArrayList();
                     for (int j = 0; j < param.length; j++) {
