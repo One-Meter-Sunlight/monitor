@@ -16,11 +16,14 @@ public class VibSPforNDTest {
         double[] param2 = new double[5];
         double value = VibSPforND.vi.GetEnvelope(param, param2,
                 new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 2, 5);
-        System.out.println(param[0]);
-        System.out.println(param[1]);
-        System.out.println(param[2]);
-        System.out.println(param[3]);
-        System.out.println(param[4]);
+        System.out.println(param2[0]);
+        System.out.println(param2[1]);
+        System.out.println(param2[2]);
+        System.out.println(param2[3]);
+        System.out.println(param2[4]);
+
+        double va = VibSPforND.vi.GetDisRMS(new double[]{1.1, 1.2, 1.3, 1.4, 1.5}, 2, 5);
+        System.out.println(va);
 
     }
 }

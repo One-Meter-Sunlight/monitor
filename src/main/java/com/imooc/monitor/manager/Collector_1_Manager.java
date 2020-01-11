@@ -184,10 +184,10 @@ public class Collector_1_Manager {
                         record.setUmPp((float) um_pp);
                         // 计算速度有效值
                         double mms_rms = VibSPforND.vi.GetVelRMS(m_timeData, samplingRate, list.size());
-                        record.setUmPp((float) mms_rms);
-                        // 计算速度有效值
+                        record.setMmsRms((float) mms_rms);
+                        // 计算加速度有效值
                         double g_rms = VibSPforND.vi.GetAccRMS(m_timeData, samplingRate, list.size());
-                        record.setUmPp((float) g_rms);
+                        record.setGRms((float) g_rms);
 
                         recordList.add(record);
                     }
