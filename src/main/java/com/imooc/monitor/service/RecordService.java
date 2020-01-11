@@ -46,7 +46,7 @@ public interface RecordService extends IService<Record> {
      * @param collectorId
      * @return
      */
-    List<RecordVO> listRecordsToTransfor(RecordCommand command, String collectorId);
+    List<RecordVO> listRecordsToTransform(RecordCommand command, String collectorId);
 
     /**
      * 查询转换后的采集器包络图数据
@@ -55,5 +55,32 @@ public interface RecordService extends IService<Record> {
      * @param collectorId
      * @return
      */
-    List<RecordVO> listEnvelopeRecordsToTransfor(RecordCommand command, String collectorId);
+    List<RecordVO> listEnvelopeRecordsToTransform(RecordCommand command, String collectorId);
+
+    /**
+     * 查询转换后的采集器包络频谱图数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<RecordVO> listEnvelopeSpectrumRecordsToTransform(RecordCommand command, String collectorId);
+
+    /**
+     * 查询由加速度时域计算速度频谱
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<RecordVO> listA2VRecordsToTransform(RecordCommand command, String collectorId);
+
+    /**
+     * 查询加速度时域数组 -> 频谱图
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<RecordVO> listA2ARecordsToTransform(RecordCommand command, String collectorId);
 }

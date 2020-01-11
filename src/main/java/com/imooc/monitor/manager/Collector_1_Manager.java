@@ -2,9 +2,17 @@ package com.imooc.monitor.manager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.imooc.monitor.datasource.DynamicDataSourceContextHolder;
-import com.imooc.monitor.entity.*;
+import com.imooc.monitor.entity.AnalystTime;
+import com.imooc.monitor.entity.AnalystTimeResponse;
+import com.imooc.monitor.entity.Channel;
+import com.imooc.monitor.entity.CollectorAdlink;
+import com.imooc.monitor.entity.HistoryTracker;
+import com.imooc.monitor.entity.HistoryTrackerResponse;
+import com.imooc.monitor.entity.Record;
+import com.imooc.monitor.jna.VibSPforND;
 import com.imooc.monitor.service.CollectorAdlinkService;
 import com.imooc.monitor.service.RecordService;
 import com.imooc.monitor.tool.Base64Util;
@@ -164,6 +172,22 @@ public class Collector_1_Manager {
                         record.setRate(samplingRate);
                         record.setDataCount(adlink.getDataCount());
                         record.setG(deDatas);
+
+                        // 调用动态链接库
+                        List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(deDatas);
+                        double[] m_timeData = new double[list.size()];
+                        for (int k = 0; k < list.size(); k++) {
+                            m_timeData[k] = Double.valueOf(list.get(k));
+                        }
+                        // 计算位移的有效值
+                        double um_pp = VibSPforND.vi.GetDisRMS(m_timeData, samplingRate, list.size());
+                        record.setUmPp((float) um_pp);
+                        // 计算速度有效值
+                        double mms_rms = VibSPforND.vi.GetVelRMS(m_timeData, samplingRate, list.size());
+                        record.setUmPp((float) mms_rms);
+                        // 计算速度有效值
+                        double g_rms = VibSPforND.vi.GetAccRMS(m_timeData, samplingRate, list.size());
+                        record.setUmPp((float) g_rms);
 
                         recordList.add(record);
                     }

@@ -62,10 +62,10 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     @Override
     public List<Record> listRecords(RecordCommand command, String collectorId) {
         Map<String, Object> paramMap = Maps.newHashMap();
-        if (StringUtils.isNoneBlank(collectorId)) {
+        if (StringUtils.isNotBlank(collectorId)) {
             paramMap.put("collectorId", collectorId);
         }
-        if (StringUtils.isNoneBlank(command.getChannel())) {
+        if (StringUtils.isNotBlank(command.getChannel())) {
             paramMap.put("channel", command.getChannel());
         }
         if (null != command.getCollectBeginDate()) {
@@ -85,12 +85,12 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
      * @return
      */
     @Override
-    public List<RecordVO> listRecordsToTransfor(RecordCommand command, String collectorId) {
+    public List<RecordVO> listRecordsToTransform(RecordCommand command, String collectorId) {
         Map<String, Object> paramMap = Maps.newHashMap();
-        if (StringUtils.isNoneBlank(collectorId)) {
+        if (StringUtils.isNotBlank(collectorId)) {
             paramMap.put("collectorId", collectorId);
         }
-        if (StringUtils.isNoneBlank(command.getChannel())) {
+        if (StringUtils.isNotBlank(command.getChannel())) {
             paramMap.put("channel", command.getChannel());
         }
         if (null != command.getCollectDate()) {
@@ -109,7 +109,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             BeanUtils.copyProperties(record, vo);
 
             String g = record.getG();
-            if (StringUtils.isNoneBlank(g)) {
+            if (StringUtils.isNotBlank(g)) {
                 List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
                 List<PointVO> pointVOS = Lists.newArrayList();
                 for (int j = 0; j < list.size(); j++) {
@@ -136,12 +136,12 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
      * @return
      */
     @Override
-    public List<RecordVO> listEnvelopeRecordsToTransfor(RecordCommand command, String collectorId) {
+    public List<RecordVO> listEnvelopeRecordsToTransform(RecordCommand command, String collectorId) {
         Map<String, Object> paramMap = Maps.newHashMap();
-        if (StringUtils.isNoneBlank(collectorId)) {
+        if (StringUtils.isNotBlank(collectorId)) {
             paramMap.put("collectorId", collectorId);
         }
-        if (StringUtils.isNoneBlank(command.getChannel())) {
+        if (StringUtils.isNotBlank(command.getChannel())) {
             paramMap.put("channel", command.getChannel());
         }
         if (null != command.getCollectDate()) {
@@ -160,7 +160,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             BeanUtils.copyProperties(record, vo);
 
             String g = record.getG();
-            if (StringUtils.isNoneBlank(g)) {
+            if (StringUtils.isNotBlank(g)) {
                 List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
                 double[] param = new double[list.size()];
                 double[] param2 = new double[list.size()];
@@ -169,7 +169,185 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
                     m_timeData[k] = Double.valueOf(list.get(k));
                 }
                 // 包络图转换
-                VibSPforND.vi.GetEnvelope(param, param2, m_timeData, 1, list.size());
+                VibSPforND.vi.GetEnvelope(param, param2, m_timeData, 2, list.size());
+                if (param.length > 0) {
+                    List<PointVO> pointVOS = Lists.newArrayList();
+                    for (int j = 0; j < param.length; j++) {
+                        PointVO pointVO = new PointVO();
+                        pointVO.setX(j);
+                        pointVO.setY(new BigDecimal(param[j]));
+                        pointVOS.add(pointVO);
+                    }
+                    vo.setPoints(pointVOS);
+                }
+            }
+
+            recordVOList.add(vo);
+        }
+
+        return recordVOList;
+    }
+
+    /**
+     * 查询转换后的采集器包络频谱图数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    @Override
+    public List<RecordVO> listEnvelopeSpectrumRecordsToTransform(RecordCommand command, String collectorId) {
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectDate()) {
+            paramMap.put("collectDate", command.getCollectDate());
+        }
+        List<Record> records = recordMapper.listRecordsByTableNameSuffixForTransfor(paramMap);
+        if (CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+
+        // 转换
+        List<RecordVO> recordVOList = Lists.newArrayList();
+        for (int i = 0; i < records.size(); i++) {
+            Record record = records.get(i);
+            RecordVO vo = new RecordVO();
+            BeanUtils.copyProperties(record, vo);
+
+            String g = record.getG();
+            if (StringUtils.isNotBlank(g)) {
+                List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
+                double[] param = new double[list.size()];
+                double[] param2 = new double[list.size()];
+                double[] m_timeData = new double[list.size()];
+                for (int k = 0; k < list.size(); k++) {
+                    m_timeData[k] = Double.valueOf(list.get(k));
+                }
+                // 包络图转换
+                VibSPforND.vi.GetEnvelope(param, param2, m_timeData, 2, list.size());
+                if (param2.length > 0) {
+                    List<PointVO> pointVOS = Lists.newArrayList();
+                    for (int j = 0; j < param2.length; j++) {
+                        PointVO pointVO = new PointVO();
+                        pointVO.setX(j);
+                        pointVO.setY(new BigDecimal(param2[j]));
+                        pointVOS.add(pointVO);
+                    }
+                    vo.setPoints(pointVOS);
+                }
+            }
+
+            recordVOList.add(vo);
+        }
+
+        return recordVOList;
+    }
+
+    /**
+     * 查询由加速度时域计算速度频谱
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    @Override
+    public List<RecordVO> listA2VRecordsToTransform(RecordCommand command, String collectorId) {
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectDate()) {
+            paramMap.put("collectDate", command.getCollectDate());
+        }
+        List<Record> records = recordMapper.listRecordsByTableNameSuffixForTransfor(paramMap);
+        if (CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+
+        // 转换
+        List<RecordVO> recordVOList = Lists.newArrayList();
+        for (int i = 0; i < records.size(); i++) {
+            Record record = records.get(i);
+            RecordVO vo = new RecordVO();
+            BeanUtils.copyProperties(record, vo);
+
+            String g = record.getG();
+            if (StringUtils.isNotBlank(g)) {
+                List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
+                double[] param = new double[list.size()];
+                double[] m_timeData = new double[list.size()];
+                for (int k = 0; k < list.size(); k++) {
+                    m_timeData[k] = Double.valueOf(list.get(k));
+                }
+                // 包络图转换
+                VibSPforND.vi.FreTrans_a2v(param, m_timeData, list.size(), record.getRate(), 2);
+                if (param.length > 0) {
+                    List<PointVO> pointVOS = Lists.newArrayList();
+                    for (int j = 0; j < param.length; j++) {
+                        PointVO pointVO = new PointVO();
+                        pointVO.setX(j);
+                        pointVO.setY(new BigDecimal(param[j]));
+                        pointVOS.add(pointVO);
+                    }
+                    vo.setPoints(pointVOS);
+                }
+            }
+
+            recordVOList.add(vo);
+        }
+
+        return recordVOList;
+    }
+
+    /**
+     * 查询加速度时域数组 -> 频谱图
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    @Override
+    public List<RecordVO> listA2ARecordsToTransform(RecordCommand command, String collectorId) {
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectDate()) {
+            paramMap.put("collectDate", command.getCollectDate());
+        }
+        List<Record> records = recordMapper.listRecordsByTableNameSuffixForTransfor(paramMap);
+        if (CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+
+        // 转换
+        List<RecordVO> recordVOList = Lists.newArrayList();
+        for (int i = 0; i < records.size(); i++) {
+            Record record = records.get(i);
+            RecordVO vo = new RecordVO();
+            BeanUtils.copyProperties(record, vo);
+
+            String g = record.getG();
+            if (StringUtils.isNotBlank(g)) {
+                List<String> list = Splitter.on("|").trimResults().omitEmptyStrings().splitToList(g);
+                double[] param = new double[list.size()];
+                double[] m_timeData = new double[list.size()];
+                for (int k = 0; k < list.size(); k++) {
+                    m_timeData[k] = Double.valueOf(list.get(k));
+                }
+                // 包络图转换
+                VibSPforND.vi.FreTrans_a2a(param, m_timeData, list.size(), 2);
                 if (param.length > 0) {
                     List<PointVO> pointVOS = Lists.newArrayList();
                     for (int j = 0; j < param.length; j++) {

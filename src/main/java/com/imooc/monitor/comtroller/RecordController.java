@@ -4,8 +4,16 @@ import com.imooc.monitor.annotation.UserLoginToken;
 import com.imooc.monitor.command.RecordCommand;
 import com.imooc.monitor.common.BaseResult;
 import com.imooc.monitor.service.RecordService;
-import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -51,22 +59,55 @@ public class RecordController {
      * 查询转换后的采集器时域图数据
      */
     @UserLoginToken
-    @RequestMapping(value = "/listRecordsToTransfor", method = RequestMethod.POST)
+    @RequestMapping(value = "/listRecordsToTransform", method = RequestMethod.POST)
     @ApiOperation(value = "查询转换后的采集器时域图数据", notes = "查询转换后的采集器时域图数据")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult listRecordsToTransfor(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
-        return BaseResult.success(recordService.listRecordsToTransfor(command, command.getCollectorId()));
+        return BaseResult.success(recordService.listRecordsToTransform(command, command.getCollectorId()));
     }
 
     /**
      * 查询转换后的采集器包络图数据
      */
     @UserLoginToken
-    @RequestMapping(value = "/listEnvelopeRecordsToTransfor", method = RequestMethod.POST)
+    @RequestMapping(value = "/listEnvelopeRecordsToTransform", method = RequestMethod.POST)
     @ApiOperation(value = "查询转换后的采集器包络图数据", notes = "查询转换后的采集器包络图数据")
     @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
     BaseResult listEnvelopeRecordsToTransfor(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
-        return BaseResult.success(recordService.listEnvelopeRecordsToTransfor(command, command.getCollectorId()));
+        return BaseResult.success(recordService.listEnvelopeRecordsToTransform(command, command.getCollectorId()));
+    }
+
+    /**
+     * 查询转换后的采集器包络频谱图数据
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/listEnvelopeSpectrumRecordsToTransform", method = RequestMethod.POST)
+    @ApiOperation(value = "查询转换后的采集器包络频谱图数据", notes = "查询转换后的采集器包络频谱图数据")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult listEnvelopeSpectrumRecordsToTransform(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
+        return BaseResult.success(recordService.listEnvelopeSpectrumRecordsToTransform(command, command.getCollectorId()));
+    }
+
+    /**
+     * 查询由加速度时域计算速度频谱
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/listA2VRecordsToTransform", method = RequestMethod.POST)
+    @ApiOperation(value = "查询由加速度时域计算速度频谱", notes = "查询由加速度时域计算速度频谱")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult listA2VRecordsToTransform(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
+        return BaseResult.success(recordService.listA2VRecordsToTransform(command, command.getCollectorId()));
+    }
+
+    /**
+     * 查询加速度时域数组 -> 频谱图
+     */
+    @UserLoginToken
+    @RequestMapping(value = "/listA2ARecordsToTransform", method = RequestMethod.POST)
+    @ApiOperation(value = "询加速度时域数组 -> 频谱图", notes = "询加速度时域数组 -> 频谱图")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult listA2ARecordsToTransform(@RequestBody @Valid @ApiParam(name = "请求对象", value = "传入JSON格式") RecordCommand command) {
+        return BaseResult.success(recordService.listA2ARecordsToTransform(command, command.getCollectorId()));
     }
 
 }

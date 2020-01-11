@@ -118,21 +118,21 @@
     <!-- 批量添加 -->
     <insert id="addBatchByTableNameSuffix" useGeneratedKeys="true" parameterType="com.imooc.monitor.entity.Record">
         INSERT INTO records_${tableNameSuffix} (
-        collector_id,
-        channel,
-        collect_date,
-        collector_note,
-        rotation_rate,
-        temprature,
-        rate,
-        data_count,
-        G,
-        FFT,
-        g_rms,
-        g_peak,
-        mms_rms,
-        mms_peak,
-        um_pp
+            collector_id,
+            channel,
+            collect_date,
+            collector_note,
+            rotation_rate,
+            temprature,
+            rate,
+            data_count,
+            G,
+            FFT,
+            g_rms,
+            g_peak,
+            mms_rms,
+            mms_peak,
+            um_pp
         ) VALUES
         <foreach collection="records" item="item" index="index" separator=",">
             (#{item.collectorId},#{item.channel},#{item.collectDate},#{item.collectorNote},#{item.rotationRate},#{item.temprature},
