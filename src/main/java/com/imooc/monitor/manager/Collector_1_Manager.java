@@ -5,14 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.imooc.monitor.datasource.DynamicDataSourceContextHolder;
-import com.imooc.monitor.entity.AnalystTime;
-import com.imooc.monitor.entity.AnalystTimeResponse;
-import com.imooc.monitor.entity.Channel;
-import com.imooc.monitor.entity.CollectorAdlink;
-import com.imooc.monitor.entity.HistoryTracker;
-import com.imooc.monitor.entity.HistoryTrackerResponse;
-import com.imooc.monitor.entity.Record;
+import com.imooc.monitor.entity.*;
 import com.imooc.monitor.jna.VibSPforND;
+import com.imooc.monitor.service.AlarmrecordsService;
 import com.imooc.monitor.service.CollectorAdlinkService;
 import com.imooc.monitor.service.RecordService;
 import com.imooc.monitor.tool.Base64Util;
@@ -61,6 +56,8 @@ public class Collector_1_Manager {
     private RecordService recordService;
     @Resource
     private CollectorAdlinkService collectorAdlinkService;
+    @Resource
+    private AlarmrecordsService alarmrecordsService;
 
     /**
      * 查询和保存type=1的采集器数据
@@ -128,6 +125,8 @@ public class Collector_1_Manager {
     private void getAndSaveAnalystTimeList(List<HistoryTracker> data, CollectorAdlink adlink, String dataSource) {
         // 采集器数据
         List<Record> recordList = Lists.newArrayList();
+        // 报警数据
+        List<Alarmrecords> alarmrecordsList = Lists.newArrayList();
 
         for (int i = 0; i < data.size(); i++) {
             HistoryTracker tracker = data.get(i);
@@ -190,6 +189,58 @@ public class Collector_1_Manager {
                         record.setGRms((float) g_rms);
 
                         recordList.add(record);
+
+                        // 循环增加报警数据
+                        if (name.equalsIgnoreCase(adlink.getChannel0Note())) {
+                            if (null != adlink.getChannel0Threshold() && g_rms >= Double.valueOf(String.valueOf(adlink.getChannel0Threshold()))) {
+                                Alarmrecords alarmrecords = new Alarmrecords();
+                                alarmrecords.setAreaId(adlink.getAreaId().toString());
+                                alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setCollectorNote(adlink.getCollectorNote());
+                                alarmrecords.setChannelIndex("0");
+                                alarmrecords.setChannelNote(name);
+                                alarmrecords.setContent("加速度过大：加速度均方根值或有效值为：" + g_rms + "，通道0报警值为：" + adlink.getChannel0Threshold());
+
+                                alarmrecordsList.add(alarmrecords);
+                            }
+                        } else if (name.equalsIgnoreCase(adlink.getChannel1Note())) {
+                            if (null != adlink.getChannel1Threshold() && g_rms >= Double.valueOf(String.valueOf(adlink.getChannel1Threshold()))) {
+                                Alarmrecords alarmrecords = new Alarmrecords();
+                                alarmrecords.setAreaId(adlink.getAreaId().toString());
+                                alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setCollectorNote(adlink.getCollectorNote());
+                                alarmrecords.setChannelIndex("1");
+                                alarmrecords.setChannelNote(name);
+                                alarmrecords.setContent("加速度过大：加速度均方根值或有效值为：" + g_rms + "，通道1报警值为：" + adlink.getChannel0Threshold());
+
+                                alarmrecordsList.add(alarmrecords);
+                            }
+                        } else if (name.equalsIgnoreCase(adlink.getChannel2Note())) {
+                            if (null != adlink.getChannel2Threshold() && g_rms >= Double.valueOf(String.valueOf(adlink.getChannel2Threshold()))) {
+                                Alarmrecords alarmrecords = new Alarmrecords();
+                                alarmrecords.setAreaId(adlink.getAreaId().toString());
+                                alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setCollectorNote(adlink.getCollectorNote());
+                                alarmrecords.setChannelIndex("2");
+                                alarmrecords.setChannelNote(name);
+                                alarmrecords.setContent("加速度过大：加速度均方根值或有效值为：" + g_rms + "，通道2报警值为：" + adlink.getChannel0Threshold());
+
+                                alarmrecordsList.add(alarmrecords);
+                            }
+                        } else if (name.equalsIgnoreCase(adlink.getChannel3Note())) {
+                            if (null != adlink.getChannel3Threshold() && g_rms >= Double.valueOf(String.valueOf(adlink.getChannel3Threshold()))) {
+                                Alarmrecords alarmrecords = new Alarmrecords();
+                                alarmrecords.setAreaId(adlink.getAreaId().toString());
+                                alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setCollectorNote(adlink.getCollectorNote());
+                                alarmrecords.setChannelIndex("3");
+                                alarmrecords.setChannelNote(name);
+                                alarmrecords.setContent("加速度过大：加速度均方根值或有效值为：" + g_rms + "，通道3报警值为：" + adlink.getChannel0Threshold());
+
+                                alarmrecordsList.add(alarmrecords);
+                            }
+                        }
+
                     }
                 }
             }
@@ -200,6 +251,12 @@ public class Collector_1_Manager {
             // 切换test数据源
             DynamicDataSourceContextHolder.setDataSource(dataSource);
             recordService.addBatchByTableNameSuffix(recordList, adlink.getCollectorId());
+        }
+
+        if (!CollectionUtils.isEmpty(alarmrecordsList)) {
+            // 切换test数据源
+            DynamicDataSourceContextHolder.setDataSource(dataSource);
+            alarmrecordsService.insertBatch(alarmrecordsList);
         }
     }
 

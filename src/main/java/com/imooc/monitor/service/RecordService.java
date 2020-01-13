@@ -2,6 +2,7 @@ package com.imooc.monitor.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.command.RecordCommand;
+import com.imooc.monitor.entity.Alarmrecords;
 import com.imooc.monitor.entity.Record;
 import com.imooc.monitor.vo.RecordVO;
 
@@ -83,4 +84,6 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     List<RecordVO> listA2ARecordsToTransform(RecordCommand command, String collectorId);
+
+    void addBatchAlarmrecordsList(List<Alarmrecords> alarmrecordsList);
 }
