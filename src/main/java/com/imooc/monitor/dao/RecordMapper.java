@@ -24,4 +24,6 @@ public interface RecordMapper extends BaseMapper<Record> {
     List<Record> listRecordsByTableNameSuffixForTransfor(Map<String, Object> paramMap);
 
     List<String> queryChannelsByCollectorId(String collectorId);
+
+    Record selectMaxCollectDateByCollectorId(String collectorId);
 }

@@ -6,6 +6,7 @@ import com.imooc.monitor.entity.Alarmrecords;
 import com.imooc.monitor.entity.Area;
 import com.imooc.monitor.vo.AreaAndCollectorsVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,7 @@ import java.util.Map;
 @Mapper
 public interface AlarmrecordsMapper extends BaseMapper<Alarmrecords> {
 
+    List<Alarmrecords> select();
+
+    List<Alarmrecords> selectByLimit(@Param("limitCount") int limitCount);
 }

@@ -83,6 +83,15 @@
         <include refid="where"/>
     </select>
 
+    <select id="selectByLimit"  resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        alarmrecords
+        order by happen_time desc
+        limit ${limitCount}
+    </select>
+
     <!-- 添加 -->
     <insert id="add" useGeneratedKeys="true" keyProperty="areaId" parameterType="com.imooc.monitor.entity.Alarmrecords">
         INSERT INTO alarmrecords (happen_time, area_id, collector_id, collector_note, channel_index, channel_note, content, remark)

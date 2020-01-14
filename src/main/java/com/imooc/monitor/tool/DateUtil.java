@@ -84,6 +84,22 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    /**
+     * 两个日期相减得到的小时数
+     *
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public static int getDiffHours(Date beginDate, Date endDate) {
+        if (beginDate == null || endDate == null) {
+            throw new IllegalArgumentException("getDiffDays param is null!");
+        }
+        long diff = (endDate.getTime() - beginDate.getTime()) / (1000 * 60 * 60);
+        int hours = new Long(diff).intValue();
+        return hours;
+    }
+
     public static Date passDate(String date, String pattern) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.parse(date);

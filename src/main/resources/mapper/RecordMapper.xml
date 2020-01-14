@@ -186,5 +186,13 @@
         where collector_id = #{collectorId}
     </select>
 
+    <select id="selectMaxCollectDateByCollectorId" resultMap="RecordsMap">
+        SELECT
+        collector_id, channel, collect_date
+        FROM
+        records_${collectorId}
+        order by collect_date desc limit 1
+    </select>
+
 </mapper>
 

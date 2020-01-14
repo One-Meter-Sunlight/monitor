@@ -197,6 +197,7 @@ public class Collector_1_Manager {
                                 alarmrecords.setAreaId(adlink.getAreaId().toString());
                                 alarmrecords.setCollectorId(adlink.getCollectorId());
                                 alarmrecords.setCollectorNote(adlink.getCollectorNote());
+                                alarmrecords.setHappenTime(collectDate);
                                 alarmrecords.setChannelIndex("0");
                                 alarmrecords.setChannelNote(name);
                                 alarmrecords.setContent("加速度过大：加速度均方根值或有效值为：" + g_rms + "，通道0报警值为：" + adlink.getChannel0Threshold());
@@ -208,6 +209,7 @@ public class Collector_1_Manager {
                                 Alarmrecords alarmrecords = new Alarmrecords();
                                 alarmrecords.setAreaId(adlink.getAreaId().toString());
                                 alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setHappenTime(collectDate);
                                 alarmrecords.setCollectorNote(adlink.getCollectorNote());
                                 alarmrecords.setChannelIndex("1");
                                 alarmrecords.setChannelNote(name);
@@ -220,6 +222,7 @@ public class Collector_1_Manager {
                                 Alarmrecords alarmrecords = new Alarmrecords();
                                 alarmrecords.setAreaId(adlink.getAreaId().toString());
                                 alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setHappenTime(collectDate);
                                 alarmrecords.setCollectorNote(adlink.getCollectorNote());
                                 alarmrecords.setChannelIndex("2");
                                 alarmrecords.setChannelNote(name);
@@ -232,6 +235,7 @@ public class Collector_1_Manager {
                                 Alarmrecords alarmrecords = new Alarmrecords();
                                 alarmrecords.setAreaId(adlink.getAreaId().toString());
                                 alarmrecords.setCollectorId(adlink.getCollectorId());
+                                alarmrecords.setHappenTime(collectDate);
                                 alarmrecords.setCollectorNote(adlink.getCollectorNote());
                                 alarmrecords.setChannelIndex("3");
                                 alarmrecords.setChannelNote(name);

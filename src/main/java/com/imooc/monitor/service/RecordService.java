@@ -85,5 +85,4 @@ public interface RecordService extends IService<Record> {
      */
     List<RecordVO> listA2ARecordsToTransform(RecordCommand command, String collectorId);
 
-    void addBatchAlarmrecordsList(List<Alarmrecords> alarmrecordsList);
 }
