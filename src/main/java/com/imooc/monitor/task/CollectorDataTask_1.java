@@ -30,7 +30,6 @@ public class CollectorDataTask_1 {
      * c_0001 采集器定时任务，每小时执行一次
      */
     @Scheduled(cron = "0 0 0/1 * * ?")
-    //@Scheduled(cron = "0 0/2 * * * ?")
     private void type_1_task() {
         logger.info(">>>>>> 开始执行所有数据源采集器类型为1的数据保存定时任务，当前时间为：[{}] <<<<<<", JSON.toJSONStringWithDateFormat(new Date(), "yyyy-MM-dd HH:mm:ss"));
         collector_1_manager.queryAndSaveCollectorData();
