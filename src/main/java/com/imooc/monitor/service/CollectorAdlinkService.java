@@ -2,6 +2,7 @@ package com.imooc.monitor.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.entity.CollectorAdlink;
+import com.imooc.monitor.vo.CollectorHealthInfoCountVO;
 import com.imooc.monitor.vo.CollectorInfoCountVO;
 
 import java.util.List;
@@ -35,4 +36,11 @@ public interface CollectorAdlinkService extends IService<CollectorAdlink> {
      * @return
      */
     CollectorInfoCountVO selectMainCollectorInfoCount();
+
+    /**
+     * 首页设备健康状况
+     *
+     * @return
+     */
+    CollectorHealthInfoCountVO selectMainCollectorHealthInfoCount();
 }

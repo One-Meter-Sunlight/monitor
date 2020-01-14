@@ -8,6 +8,7 @@ import com.imooc.monitor.vo.AreaAndCollectorsVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,4 +24,6 @@ public interface AlarmrecordsMapper extends BaseMapper<Alarmrecords> {
     List<Alarmrecords> select();
 
     List<Alarmrecords> selectByLimit(@Param("limitCount") int limitCount);
+
+    List<String> selectDistinctCollectorIdByCollctorIds(ArrayList<String> newArrayList);
 }

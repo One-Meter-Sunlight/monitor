@@ -1,12 +1,15 @@
 package com.imooc.monitor.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
+import com.imooc.monitor.dao.AlarmrecordsMapper;
 import com.imooc.monitor.dao.CollectorAdlinkMapper;
 import com.imooc.monitor.dao.RecordMapper;
 import com.imooc.monitor.entity.CollectorAdlink;
 import com.imooc.monitor.entity.Record;
 import com.imooc.monitor.service.CollectorAdlinkService;
 import com.imooc.monitor.tool.DateUtil;
+import com.imooc.monitor.vo.CollectorHealthInfoCountVO;
 import com.imooc.monitor.vo.CollectorInfoCountVO;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -18,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 采集器管理服务实现类
@@ -36,6 +41,8 @@ public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMappe
      */
     private static final Logger logger = LoggerFactory.getLogger(CollectorAdlinkServiceImpl.class);
 
+    @Autowired
+    private AlarmrecordsMapper alarmrecordsMapper;
     @Autowired
     private CollectorAdlinkMapper collectorAdlinkMapper;
     @Autowired
@@ -88,6 +95,48 @@ public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMappe
 
         vo.setOfflineCount(unUsed);
         vo.setRunningCount(used);
+
+        return vo;
+    }
+
+    /**
+     * 首页设备健康状况
+     *
+     * @return
+     */
+    @Override
+    public CollectorHealthInfoCountVO selectMainCollectorHealthInfoCount() {
+
+        // 创建返回对象
+        CollectorHealthInfoCountVO vo = new CollectorHealthInfoCountVO();
+        // 总数
+        List<CollectorAdlink> collectorAdlinks = collectorAdlinkMapper.select();
+
+        if (CollectionUtils.isEmpty(collectorAdlinks)) {
+            vo.setDangerCount(0);
+            vo.setAlarmreCount(0);
+            vo.setNormalCount(0);
+            return vo;
+        }
+
+        // 循环采集器，并查询是否有告警记录
+        Set<String> collectors = collectorAdlinks.stream().map(CollectorAdlink::getCollectorId).collect(Collectors.toSet());
+        // 查询所有采集器告警记录
+        List<String> resultCollectorIds = alarmrecordsMapper.selectDistinctCollectorIdByCollctorIds(Lists.newArrayList(collectors));
+        if (!CollectionUtils.isEmpty(resultCollectorIds)) {
+            if (collectors.size() == resultCollectorIds.size()) {
+                vo.setNormalCount(0);
+                vo.setAlarmreCount(collectors.size());
+            } else {
+                vo.setAlarmreCount(resultCollectorIds.size());
+                vo.setNormalCount(collectors.size() - resultCollectorIds.size());
+            }
+        } else {
+            vo.setNormalCount(collectors.size());
+            vo.setAlarmreCount(0);
+        }
+
+        vo.setDangerCount(0);
 
         return vo;
     }

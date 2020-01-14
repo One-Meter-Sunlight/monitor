@@ -46,4 +46,12 @@ public class MainController {
         return BaseResult.success(collectorAdlinkService.selectMainCollectorInfoCount());
     }
 
+    @UserLoginToken
+    @RequestMapping(value = "/collectorHealthInfo", method = RequestMethod.GET)
+    @ApiOperation(value = "首页设备健康状况", notes = "首页设备健康状况")
+    @ApiResponse(response = BaseResult.class, code = 200, message = "接口返回对象参数")
+    BaseResult collectorHealthInfo() {
+        return BaseResult.success(collectorAdlinkService.selectMainCollectorHealthInfoCount());
+    }
+
 }

@@ -92,6 +92,13 @@
         limit ${limitCount}
     </select>
 
+    <select id="selectDistinctCollectorIdByCollctorIds" resultType="java.lang.String">
+        SELECT
+        distinct collector_id
+        FROM
+        alarmrecords
+    </select>
+
     <!-- 添加 -->
     <insert id="add" useGeneratedKeys="true" keyProperty="areaId" parameterType="com.imooc.monitor.entity.Alarmrecords">
         INSERT INTO alarmrecords (happen_time, area_id, collector_id, collector_note, channel_index, channel_note, content, remark)
