@@ -240,7 +240,6 @@ public class Collector_1_Manager {
                                 alarmrecordsList.add(alarmrecords);
                             }
                         }
-
                     }
                 }
             }

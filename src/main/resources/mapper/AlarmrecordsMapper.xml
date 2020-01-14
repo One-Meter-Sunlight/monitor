@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imooc.monitor.dao.AlarmrecordsMapper">
+
+    <resultMap id="AlarmrecordsMap" type="com.imooc.monitor.entity.Alarmrecords">
+        <result property="happenTime" column="happen_time"/>
+        <result property="areaId" column="area_id"/>
+        <result property="collectorId" column="collector_id"/>
+        <result property="collectorNote" column="collector_note"/>
+        <result property="channelIndex" column="channel_index"/>
+        <result property="channelNote" column="channel_note"/>
+        <result property="content" column="content"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="columns">
+        happen_time, area_id, collector_id, collector_note, channel_index, channel_note, content, remark
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="happenTime != null">
+                AND happen_time = #{happenTime}
+            </if>
+            <if test="areaId != null">
+                AND area_id = #{areaId}
+            </if>
+            <if test="collectorId != null">
+                AND collector_id = #{collectorId}
+            </if>
+            <if test="collectorNote != null">
+                AND collector_note = #{collectorNote}
+            </if>
+            <if test="channelIndex != null">
+                AND channel_index = #{channelIndex}
+            </if>
+            <if test="channelNote != null">
+                AND channel_note = #{channelNote}
+            </if>
+            <if test="content != null">
+                AND content = #{content}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 根据主键查询（单对象）-->
+    <select id="get" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        alarmrecords
+        <include refid="where" />
+        LIMIT 1;
+    </select>
+
+    <!-- 根据条件查询 -->
+    <select id="getByKey" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        alarmrecords
+        <include refid="where"/>
+    </select>
+
+    <!-- 分页查询(对象集合)-->
+    <select id="find" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM alarmrecords
+    </select>
+
+    <!-- 根据条件查询(对象集合) -->
+    <select id="select" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        alarmrecords
+        <include refid="where"/>
+    </select>
+
+    <!-- 添加 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="areaId" parameterType="com.imooc.monitor.entity.Alarmrecords">
+        INSERT INTO alarmrecords (happen_time, area_id, collector_id, collector_note, channel_index, channel_note, content, remark)
+        VALUES ( #{happenTime}, #{areaId}, #{areaId}, #{areaId}, #{areaId}, #{areaId}, #{areaId} )
+    </insert>
+
+    <!-- 批量添加 -->
+    <insert id="addBatch" useGeneratedKeys="true" parameterType="com.imooc.monitor.entity.Alarmrecords">
+        INSERT INTO alarmrecords (
+        happen_time, area_id, collector_id, collector_note, channel_index, channel_note, content, remark
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.areaId}, #{item.areaName}, #{item.areaName}, #{item.areaName}, #{item.areaName}, #{item.areaName}, #{item.areaName}, #{item.areaName})
+        </foreach>
+    </insert>
+
+    <!--分页查询-->
+    <select id="selectForPage" parameterType="java.util.Map" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM alarmrecords
+        <where>
+            <if test="happenTime != null">
+                AND happen_time = #{happenTime}
+            </if>
+            <if test="areaId != null">
+                AND area_id = #{areaId}
+            </if>
+            <if test="collectorId != null">
+                AND collector_id = #{collectorId}
+            </if>
+            <if test="collectorNote != null">
+                AND collector_note = #{collectorNote}
+            </if>
+            <if test="channelIndex != null">
+                AND channel_index = #{channelIndex}
+            </if>
+        </where>
+    </select>
+
+    <!--列表查询-->
+    <select id="selectForList" parameterType="java.util.Map" resultMap="AlarmrecordsMap">
+        SELECT
+        <include refid="columns"/>
+        FROM alarmrecords
+        <where>
+            <if test="happenTime != null">
+                AND happen_time = #{happenTime}
+            </if>
+            <if test="areaId != null">
+                AND area_id = #{areaId}
+            </if>
+            <if test="collectorId != null">
+                AND collector_id = #{collectorId}
+            </if>
+            <if test="collectorNote != null">
+                AND collector_note = #{collectorNote}
+            </if>
+            <if test="channelIndex != null">
+                AND channel_index = #{channelIndex}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
