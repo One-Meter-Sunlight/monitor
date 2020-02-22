@@ -100,6 +100,22 @@ public class DateUtil {
         return hours;
     }
 
+    /**
+     * 两个日期相减得到的秒数
+     *
+     * @param beginDate
+     * @param endDate
+     * @return
+     */
+    public static int getDiffSeconds(Date beginDate, Date endDate) {
+        if (beginDate == null || endDate == null) {
+            throw new IllegalArgumentException("getDiffSeconds param is null!");
+        }
+        long diff = endDate.getTime() - beginDate.getTime();
+        int seconds = new Long(diff).intValue();
+        return seconds;
+    }
+
     public static Date passDate(String date, String pattern) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.parse(date);

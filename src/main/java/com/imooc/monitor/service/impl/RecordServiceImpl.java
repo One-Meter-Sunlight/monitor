@@ -9,6 +9,7 @@ import com.imooc.monitor.dao.RecordMapper;
 import com.imooc.monitor.entity.Record;
 import com.imooc.monitor.jna.VibSPforND;
 import com.imooc.monitor.service.RecordService;
+import com.imooc.monitor.vo.PointTrendVO;
 import com.imooc.monitor.vo.PointVO;
 import com.imooc.monitor.vo.RecordVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +38,105 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
 
     @Autowired
     private RecordMapper recordMapper;
+
+    @Override
+    public List<PointTrendVO> listRecordsByMmsRms(RecordCommand command, String collectorId) {
+        // 结果集
+        List<PointTrendVO> result = Lists.newArrayList();
+        // 查询
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectBeginDate()) {
+            paramMap.put("collectBeginDate", command.getCollectBeginDate());
+        }
+        if (null != command.getCollectEndDate()) {
+            paramMap.put("collectEndDate", command.getCollectEndDate());
+        }
+        List<Record> list = recordMapper.listRecordsByTableNameSuffix(paramMap);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Record record : list) {
+                Date collectDate = record.getCollectDate();
+                Float mmsRms = record.getMmsRms();
+                PointTrendVO pointVO = new PointTrendVO();
+                pointVO.setX(collectDate);
+                pointVO.setY(null != mmsRms ? new BigDecimal(mmsRms) : BigDecimal.ZERO);
+                result.add(pointVO);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<PointTrendVO> listRecordsByUmPp(RecordCommand command, String collectorId) {
+        // 结果集
+        List<PointTrendVO> result = Lists.newArrayList();
+        // 查询
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectBeginDate()) {
+            paramMap.put("collectBeginDate", command.getCollectBeginDate());
+        }
+        if (null != command.getCollectEndDate()) {
+            paramMap.put("collectEndDate", command.getCollectEndDate());
+        }
+        List<Record> list = recordMapper.listRecordsByTableNameSuffix(paramMap);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Record record : list) {
+                Date collectDate = record.getCollectDate();
+                Float umPp = record.getUmPp();
+                PointTrendVO pointVO = new PointTrendVO();
+                pointVO.setX(collectDate);
+                pointVO.setY(null != umPp ? new BigDecimal(umPp) : BigDecimal.ZERO);
+                result.add(pointVO);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<PointTrendVO> listRecordsByGrms(RecordCommand command, String collectorId) {
+        // 结果集
+        List<PointTrendVO> result = Lists.newArrayList();
+        // 查询
+        Map<String, Object> paramMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(collectorId)) {
+            paramMap.put("collectorId", collectorId);
+        }
+        if (StringUtils.isNotBlank(command.getChannel())) {
+            paramMap.put("channel", command.getChannel());
+        }
+        if (null != command.getCollectBeginDate()) {
+            paramMap.put("collectBeginDate", command.getCollectBeginDate());
+        }
+        if (null != command.getCollectEndDate()) {
+            paramMap.put("collectEndDate", command.getCollectEndDate());
+        }
+        List<Record> list = recordMapper.listRecordsByTableNameSuffix(paramMap);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (Record record : list) {
+                Date collectDate = record.getCollectDate();
+                Float gRms = record.getGRms();
+                PointTrendVO pointVO = new PointTrendVO();
+                pointVO.setX(collectDate);
+                pointVO.setY(null != gRms ? new BigDecimal(gRms) : BigDecimal.ZERO);
+                result.add(pointVO);
+            }
+        }
+
+        return result;
+    }
 
     @Override
     public void addBatchByTableNameSuffix(List<Record> records, String tableNameSuffix) {

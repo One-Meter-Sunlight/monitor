@@ -85,7 +85,7 @@ public class CollectorAdlinkServiceImpl extends ServiceImpl<CollectorAdlinkMappe
             if (null != record) {
                 // 采集时间
                 Date collectDate = record.getCollectDate();
-                if (DateUtil.getDiffHours(collectDate, date) > saveInterval) {
+                if (DateUtil.getDiffSeconds(collectDate, date) > saveInterval) {
                     unUsed++;
                 } else {
                     used++;

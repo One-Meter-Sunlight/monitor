@@ -2,8 +2,8 @@ package com.imooc.monitor.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.imooc.monitor.command.RecordCommand;
-import com.imooc.monitor.entity.Alarmrecords;
 import com.imooc.monitor.entity.Record;
+import com.imooc.monitor.vo.PointTrendVO;
 import com.imooc.monitor.vo.RecordVO;
 
 import java.util.List;
@@ -85,4 +85,30 @@ public interface RecordService extends IService<Record> {
      */
     List<RecordVO> listA2ARecordsToTransform(RecordCommand command, String collectorId);
 
+    /**
+     * 查询速度趋势数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<PointTrendVO> listRecordsByMmsRms(RecordCommand command, String collectorId);
+
+    /**
+     * 查询位移趋势数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<PointTrendVO> listRecordsByUmPp(RecordCommand command, String collectorId);
+
+    /**
+     * 查询位加速度趋势数据
+     *
+     * @param command
+     * @param collectorId
+     * @return
+     */
+    List<PointTrendVO> listRecordsByGrms(RecordCommand command, String collectorId);
 }
