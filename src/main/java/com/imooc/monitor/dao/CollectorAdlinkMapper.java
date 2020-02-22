@@ -3,6 +3,7 @@ package com.imooc.monitor.dao;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.imooc.monitor.entity.CollectorAdlink;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -36,4 +37,15 @@ public interface CollectorAdlinkMapper extends BaseMapper<CollectorAdlink> {
      * @return
      */
     List<CollectorAdlink> select();
+
+    /**
+     * 修改采集器配置信息
+     *
+     * @param collectorId  传感器ID
+     * @param rate         采样频率
+     * @param dataCount    采样点数
+     * @param saveInterval 保存间隔
+     */
+    void updateByInterface(@Param("collectorId") String collectorId, @Param("rate") Integer rate,
+                         @Param("dataCount") Integer dataCount, @Param("saveInterval") Integer saveInterval);
 }

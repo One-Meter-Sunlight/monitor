@@ -326,4 +326,20 @@
        WHERE collector_id = #{record.collectorId}
     </update>
 
+    <update id="updateByInterface">
+        update collector_adlink
+        <set>
+            <if test="rate != null">
+                rate = #{rate},
+            </if>
+            <if test="dataCount != null">
+                data_count = #{dataCount},
+            </if>
+            <if test="saveInterval != null">
+                save_interval = #{saveInterval},
+            </if>
+        </set>
+        WHERE collector_id = #{collectorId}
+    </update>
+
 </mapper>
